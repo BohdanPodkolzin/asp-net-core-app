@@ -31,75 +31,37 @@ namespace ExpenceTracker.Controllers
             return View(category);
         }
 
-        // GET: Category/Create
-        public IActionResult Create()
+        // GET: Category/AddOrEdit
+        public IActionResult AddOrEdit(int id=0)
         {
-            return View(new Category());
+            if (id == 0)
+            {
+                return View(new Category());
+            }
+
+            return View(context.Categories.Find(id));
         }
 
-        // POST: Category/Create
+        // POST: Category/AddOrEdit
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CategoryId,Title,Icon,Type")] Category category)
+        public async Task<IActionResult> AddOrEdit([Bind("CategoryId,Title,Icon,Type")] Category category)
         {
             if (ModelState.IsValid)
             {
-                context.Add(category);
-                await context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(category);
-        }
-
-        // GET: Category/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var category = await context.Categories.FindAsync(id);
-            if (category == null)
-            {
-                return NotFound();
-            }
-            return View(category);
-        }
-
-        // POST: Category/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CategoryId,Title,Icon,Type")] Category category)
-        {
-            if (id != category.CategoryId)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
+                if (category.CategoryId == 0) // For new records
                 {
-                    context.Update(category);
-                    await context.SaveChangesAsync();
+                    context.Categories.Add(category);
                 }
-                catch (DbUpdateConcurrencyException)
+                else // For existing records
                 {
-                    if (!CategoryExists(category.CategoryId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    context.Categories.Update(category);
                 }
-                return RedirectToAction(nameof(Index));
+
+                context.SaveChanges();
+                return RedirectToAction("Index");
             }
             return View(category);
         }

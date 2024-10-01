@@ -26,3 +26,25 @@ body {
 .e-bigger {
     font-size: x-large;
 }
+
+/* radio buttons */
+.e-btn-group.custom-rbt-group {
+    width: 100%;
+}
+
+    .e-btn-group.custom-rbt-group label.e-btn {
+        width: 50%;
+        box-shadow: none !important;
+        border: 1px solid #fff;
+        background-color: rgb(34, 43, 51);
+        color: #fff;
+    }
+
+    /* Change the background color and style for the checked radio button */
+    .e-btn-group.custom-rbt-group input[type="radio"]:checked + label.e-btn {
+        background-color: #fff;
+        color: #212b36;
+        border: 1px solid #fff;
+    }
+
+}
