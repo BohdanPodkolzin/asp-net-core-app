@@ -33,14 +33,8 @@ namespace ExpenceTracker.Controllers
 
         // GET: Category/AddOrEdit
         public IActionResult AddOrEdit(int id=0)
-        {
-            if (id == 0)
-            {
-                return View(new Category());
-            }
-
-            return View(context.Categories.Find(id));
-        }
+            => View(id == 0 ? new Category() : context.Categories.Find(id));
+        
 
         // POST: Category/AddOrEdit
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -49,21 +43,19 @@ namespace ExpenceTracker.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddOrEdit([Bind("CategoryId,Title,Icon,Type")] Category category)
         {
-            if (ModelState.IsValid)
-            {
-                if (category.CategoryId == 0) // For new records
-                {
-                    context.Categories.Add(category);
-                }
-                else // For existing records
-                {
-                    context.Categories.Update(category);
-                }
+            if (!ModelState.IsValid) return View(category);
 
-                context.SaveChanges();
-                return RedirectToAction("Index");
+            if (category.CategoryId == 0)
+            {
+                context.Categories.Add(category);
             }
-            return View(category);
+            else 
+            {
+                context.Categories.Update(category);
+            }
+
+            await context.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
 
         // GET: Category/Delete/5

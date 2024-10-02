@@ -2,6 +2,8 @@ html {
   font-size: 14px;
 }
 
+
+
 @media (min-width: 768px) {
   html {
     font-size: 16px;
@@ -32,19 +34,36 @@ body {
     width: 100%;
 }
 
-    .e-btn-group.custom-rbt-group label.e-btn {
-        width: 50%;
-        box-shadow: none !important;
-        border: 1px solid #fff;
-        background-color: rgb(34, 43, 51);
-        color: #fff;
-    }
+.e-btn-group.custom-rbt-group label.e-btn {
+    width: 50%;
+    box-shadow: none !important;
+    border: 1px solid #fff;
+    background-color: rgb(34, 43, 51);
+    color: #fff;
+}
 
-    /* Change the background color and style for the checked radio button */
-    .e-btn-group.custom-rbt-group input[type="radio"]:checked + label.e-btn {
-        background-color: #fff;
-        color: #212b36;
-        border: 1px solid #fff;
-    }
+.e-btn-group.custom-rbt-group input[type="radio"]:checked + label.e-btn {
+    background-color: #fff;
+    color: #212b36;
+    border: 1px solid #fff;
+}
 
+ 
+
+/* widget */
+.widget {
+    border-radius: 1rem;
+    background-color: #1a222b;
+    padding: 2rem;
+}
+
+.back {
+    padding: 2rem;
+}
+
+.row {
+    display: flex;
+    justify-content: center; /* Horizontally center the widget */
+    align-items: center; /* Vertically center the widget */
+    min-height: 100vh; /* Set the row to full viewport height */
 }
