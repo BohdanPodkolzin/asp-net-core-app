@@ -353,14 +353,13 @@ img.profile-pic {
 
 
 .wrapper {
-    min-height: 100%; /* Full height to push footer to bottom */
+    min-height: 100%;
     display: flex;
-    flex-direction: column; /* Align items in a column */
+    flex-direction: column;
 }
 
 
 .footer {
-    /* You can add styles for your footer here */
-    text-align: center; /* Center text */
-    padding: 1rem 0; /* Add padding */
+    text-align: center; 
+    padding: 1rem 0; 
 }
