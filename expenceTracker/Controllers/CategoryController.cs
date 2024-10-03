@@ -59,6 +59,7 @@ namespace ExpenceTracker.Controllers
         }
 
         // GET: Category/Delete/5
+        // This action might not be needed, as you are using POST directly
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -66,8 +67,7 @@ namespace ExpenceTracker.Controllers
                 return NotFound();
             }
 
-            var category = await context.Categories
-                .FirstOrDefaultAsync(m => m.CategoryId == id);
+            var category = await context.Categories.FirstOrDefaultAsync(m => m.CategoryId == id);
             if (category == null)
             {
                 return NotFound();
@@ -91,9 +91,5 @@ namespace ExpenceTracker.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CategoryExists(int id)
-        {
-            return context.Categories.Any(e => e.CategoryId == id);
-        }
     }
 }

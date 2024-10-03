@@ -8,11 +8,11 @@
 
 <div class="row">
     <div class="col-md-7">
-        <ejs-grid id="categories" dataSource="@Model" gridLines="None">
+        <ejs-grid id="categories" dataSource="@Model" gridLines="None" allowSorting="true" allowPaging="true">
             <e-grid-columns>
                 <e-grid-column headerText="Category" field="IconAndTitle" />
                 <e-grid-column headerText="Type" template="#typeColumnTemplate" />
-                <e-grid-column headerText="Actions" />
+                <e-grid-column headerText="Actions" template="#actionsTemplate" />
             </e-grid-columns>
         </ejs-grid>
     </div>
@@ -31,4 +31,18 @@
     <span class="badge bg-danger">${Type}</span>
     ${/if}
 </script>
-
+        
+<script id="actionsTemplate" type="text/x-template">
+    <div class="d-flex flex-row justify-content-start">
+        <a class="btn btn-sm no-a-decoration" href="/Category/AddOrEdit/${CategoryId}">
+            <i class="fa-solid fa-pen fa-lg"></i>
+        </a>
+        <form action="/Category/Delete/${CategoryId}" method="post">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-sm btn-link no-a-decoration"
+            onclick="return confirm('Do you really want to delete this record?')">
+                <i class="fa-solid fa-trash-can fa-lg text-danger"></i>
+            </button>
+        </form>
+    </div>
+</script>
