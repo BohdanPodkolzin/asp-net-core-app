@@ -18,6 +18,9 @@ namespace expenceTracker.Models
         [Column(TypeName = "nvarchar(50)")]
         public string Type { get; set; } = "Expense";
 
+        [NotMapped] 
+        public string IconAndTitle => $"{Icon}{Title}";
+
         public List<Transaction> Transactions { get; set; } = [];
     }
 }
