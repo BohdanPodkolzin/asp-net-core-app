@@ -11,6 +11,7 @@
         <div class="widget p-5">
             <form asp-action="AddOrEdit">
                 <div asp-validation-summary="ModelOnly" class="text-danger "></div>
+                <input type="hidden" name="TransactionId" value="@Model.TransactionId" />
                 <div class="mb-3">
                     <ejs-datetimepicker id="datetimepicker" min="minDate" max="maxDate" ejs-for="@Model.Date" placeholder="Date" floatLabelType="Always" format="MMM-dd-yyyy"/>
                     <span asp-validation-for="Date" class="text-danger"></span>

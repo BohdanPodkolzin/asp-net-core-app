@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
 
 namespace expenceTracker.Models
 {
@@ -21,6 +22,7 @@ namespace expenceTracker.Models
         [NotMapped] 
         public string IconAndTitle => $"{Icon}{Title}";
 
+        [JsonIgnore]
         public List<Transaction> Transactions { get; set; } = [];
     }
 }

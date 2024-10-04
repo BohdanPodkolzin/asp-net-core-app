@@ -24,7 +24,7 @@ namespace ExpenceTracker.Controllers
         public async Task<IActionResult> AddOrEdit(int id)
         {
             await GetCategories();
-            return View(id == 0 ? new Transaction() : context.Transactions.Find(id));
+            return View(id == 0 ? new Transaction() : await context.Transactions.FindAsync(id));
         }
 
         // POST: Transaction/AddOrEdit
@@ -36,7 +36,14 @@ namespace ExpenceTracker.Controllers
         {
             if (ModelState.IsValid)
             {
-                context.Add(transaction);
+                if (transaction.TransactionId == 0)
+                {
+                    context.Add(transaction);
+                }
+                else
+                {
+                    context.Update(transaction);
+                }
                 await context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

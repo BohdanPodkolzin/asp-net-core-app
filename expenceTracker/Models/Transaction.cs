@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Drawing;
 
 namespace expenceTracker.Models
 {
@@ -19,5 +20,18 @@ namespace expenceTracker.Models
         
         public int CategoryId { get; set; }
         public Category? Category { get; set; } = null!;
+
+
+        [NotMapped] 
+        public string CategoryIconAndTitle 
+            => Category == null 
+                ? "" 
+                : $"{Category.Icon} {Category.Title}";
+
+        [NotMapped]
+        public string FormattedAmount
+            => ((Category == null || Category.Type == "Expense")
+                ? $"- " : $"+ ") 
+               + Amount.ToString("C0");
     }
 }
