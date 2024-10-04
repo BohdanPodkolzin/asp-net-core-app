@@ -9,6 +9,7 @@ namespace expenceTracker.Models
         [Key]
         public int TransactionId { get; set; }
 
+        [Range(1, int.MinValue, ErrorMessage ="Amount should be greater than 0")]
         public int Amount { get; set; }
 
         [Column(TypeName = "nvarchar(50)")]
@@ -17,7 +18,7 @@ namespace expenceTracker.Models
         public DateTime Date { get; set; } = DateTime.Now;
 
 
-        
+        [Range(1, int.MaxValue, ErrorMessage = "Please, specify a category")]
         public int CategoryId { get; set; }
         public Category? Category { get; set; } = null!;
 
