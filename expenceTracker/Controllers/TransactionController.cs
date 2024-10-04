@@ -21,10 +21,10 @@ namespace ExpenceTracker.Controllers
 
 
         // GET: Transaction/AddOrEdit
-        public IActionResult AddOrEdit()
+        public async Task<IActionResult> AddOrEdit(int id)
         {
-            ViewData["CategoryId"] = new SelectList(context.Categories, "CategoryId", "CategoryId");
-            return View();
+            await GetCategories();
+            return View(id == 0 ? new Transaction() : context.Transactions.Find(id));
         }
 
         // POST: Transaction/AddOrEdit
@@ -40,7 +40,7 @@ namespace ExpenceTracker.Controllers
                 await context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(context.Categories, "CategoryId", "CategoryId", transaction.CategoryId);
+            await GetCategories();
             return View(transaction);
         }
 
@@ -58,6 +58,15 @@ namespace ExpenceTracker.Controllers
 
             await context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        [NonAction]
+        public async Task GetCategories()
+        {
+            var categories = await context.Categories.ToListAsync();
+            var defaultCategory = new Category() { CategoryId = 0, Title = "Specify Category Name" };
+            categories.Insert(0, defaultCategory);
+            ViewBag.Categories = categories; 
         }
     }
 }
