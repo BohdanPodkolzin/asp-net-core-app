@@ -18,17 +18,30 @@ namespace ExpenceTracker.Controllers
                 .ToListAsync();
 
             var totalIncome = selectedTransactions
-                .Where(c => c.Category.Type == "Income")
+                .Where(c => c.Category?.Type == "Income")
                 .Sum(t => t.Amount);
             ViewBag.TotalIncome = totalIncome;
 
             var totalExpense= selectedTransactions
-                .Where(c => c.Category.Type == "Expense")
+                .Where(c => c.Category?.Type == "Expense")
                 .Sum(t => t.Amount);
-            ViewBag.TotalIncome = totalExpense;
+            ViewBag.TotalExpense = totalExpense;
 
-            int balance = totalIncome - totalExpense;
+            var balance = totalIncome - totalExpense;
             ViewBag.Balance = balance.ToString("C0");
+
+            // donut
+            ViewBag.DoughnutChartData = selectedTransactions
+                .Where(c => c.Category?.Type == "Expense")
+                .GroupBy(c => c.Category.CategoryId)
+                .Select(n => new
+                {
+                    amount = n.Sum(a => a.Amount),
+                    formattedAmount = n.Sum(a => a.Amount).ToString("C0"),
+                    categoryIconWithTitle = n.First().Category.Icon + " " + n.First().Category.Title
+
+                })
+                .ToList();
 
 
             return View();
