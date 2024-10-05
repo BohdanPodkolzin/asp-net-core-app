@@ -41,6 +41,7 @@ namespace ExpenceTracker.Controllers
                     categoryIconWithTitle = n.First().Category.Icon + " " + n.First().Category.Title
 
                 })
+                .OrderBy(x => x.amount)
                 .ToList();
 
 
