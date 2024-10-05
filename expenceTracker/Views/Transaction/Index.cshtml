@@ -14,7 +14,7 @@
                 <e-grid-column headerText="Category" field="CategoryIconAndTitle" />
                 <e-grid-column headerText="Date" format="MMM-dd-yy"  type="date" field="Date" width="160px" />
                 <e-grid-column headerText="Amount" field="FormattedAmount" textAlign="Right" width="120px" />
-                <e-grid-column headerText="Actions" template="#actionsTemplate" width="130px"></e-grid-column>
+                <e-grid-column headerText="Actions" template="#actionsTransactionTemplate" width="130px"></e-grid-column>
             </e-grid-columns>
         </ejs-grid>
     </div>
@@ -25,12 +25,12 @@
     </div>
 </div>  
 
-<script id="actionsTemplate" type="text/x-template">
+<script id="actionsTransactionTemplate" type="text/x-template">
     <div class="d-flex flex-row justify-content-start">
         <a class="btn btn-sm no-a-decoration" href="/Transaction/AddOrEdit/${TransactionId}">
             <i class="fa-solid fa-pen fa-lg"></i>
         </a>
-        <form action="/Category/Delete/${TransactionId}}" method="post">
+        <form action="/Transaction/Delete/${TransactionId}" method="post">
     @Html.AntiForgeryToken()
             <button type="submit" class="btn btn-sm btn-link no-a-decoration"
             onclick="return confirm('Do you really want to delete this record?')">
@@ -39,3 +39,4 @@
         </form>
     </div>
 </script>
+

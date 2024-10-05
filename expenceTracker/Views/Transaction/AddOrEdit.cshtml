@@ -2,8 +2,8 @@
 
 @{
     ViewData["PageTitle"] = @Model.TransactionId == 0 ? "Create a new transaction" : "Edit transaction";
-    var minDate = DateTime.Now.AddDays(-30);
-    var maxDate = DateTime.Now.AddDays(30);
+    var minDate = DateTime.Today.AddDays(-30);
+    var maxDate = DateTime.Today.AddDays(30);
 }
 
 <div class="row">
@@ -24,7 +24,7 @@
                     <span asp-validation-for="CategoryId" class="text-danger fs-6"></span>
                 </div>
                 <div class="mb-3">
-                    <ejs-numerictextbox id="numeric" min="0" format="c0" ejs-for="@Model.Amount" Type="text" placeholder="Amount" floatLabelType="Always" />
+                    <ejs-numerictextbox id="numeric" min="1" format="c0" ejs-for="@Model.Amount" placeholder="Amount" floatLabelType="Always"></ejs-numerictextbox>
                     <span asp-validation-for="Amount" class="text-danger fs-6"></span>
                 </div>
                 <div class="mb-3">
