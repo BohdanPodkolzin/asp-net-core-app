@@ -16,71 +16,79 @@
     <link rel="stylesheet" href="~/expenceTracker.styles.css" asp-append-version="true" />
 </head>
 <body class="e-bigger">
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">expenceTracker</a>
-                @Html.AntiForgeryToken()
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
+
+<partial name="_SideBar" />
+
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">expenceTracker</a>
+            @Html.AntiForgeryToken()
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                    </li>
+                </ul>
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
+</header>
+<div class="main-content">
     <div class="container mt-5">
         <div class="row justify-content-center">
-            <div class="col-md-10">
+            <div class="@(ViewData["isDashboard"] == null? "col-md-10" : "col-md-12")">
                 <main role="main" class="pb-3">
-                    <div class="row">
-                        <div class="col-md-7">
-                            <div class="d-flex flex-column mb-5">
-                                <div class="d-flex mb-1">
-                                    <div class="flex-grow-1">
-                                        <h3 class="fw-bold">@ViewData["PageTitle"]</h3>
-                                        <ejs-breadcrumb id="breadcrumb" separatorTemplate="@Html.Raw("<span class='fa-solid fa-angle-right'></span>")" />
-                                    </div>
-                                    <div>
-                                        @if (ViewData["PageActionText"] != null)
-                                        {
-                                            <a class="btn btn-dark" href="@ViewData["PageActionUrl"]">@ViewData["PageActionText"]</a>
-                                        }
+                    @if (ViewData["isDashboard"] == null)
+                    {
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div class="d-flex flex-column mb-5">
+                                    <div class="d-flex mb-1">
+                                        <div class="flex-grow-1">
+                                            <h3 class="fw-bold">@ViewData["PageTitle"]</h3>
+                                            <ejs-breadcrumb id="breadcrumb" separatorTemplate="@Html.Raw("<span class='fa-solid fa-angle-right'></span>")"/>
+                                        </div>
+                                        <div>
+                                            @if (ViewData["PageActionText"] != null)
+                                            {
+                                                <a class="btn btn-dark" href="@ViewData["PageActionUrl"]">@ViewData["PageActionText"]</a>
+                                            }
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    }
                     @RenderBody()
                 </main>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="wrapper">
-        <main role="main" class="pb-3">
-            <!-- Your main content here -->
-        </main>
-        <footer class="border-top footer text-muted">
-            <div class="container">
-                © 2024 - expenceTracker - <a href="/Home/Privacy">Privacy</a>
-            </div>
-        </footer>
-    </div>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
-    
-    <ejs-scripts></ejs-scripts>
-    </body>
+<div class="wrapper">
+    <main role="main" class="pb-3">
+        <!-- Your main content here -->
+    </main>
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            © 2024 - expenceTracker - <a href="/Home/Privacy">Privacy</a>
+        </div>
+    </footer>
+</div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+@await RenderSectionAsync("Scripts", required: false)
+
+<ejs-scripts></ejs-scripts>
+</body>
 </html>
