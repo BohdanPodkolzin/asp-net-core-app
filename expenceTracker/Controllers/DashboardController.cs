@@ -44,8 +44,74 @@ namespace ExpenceTracker.Controllers
                 .OrderBy(x => x.amount)
                 .ToList();
 
+            // spline chart ===================================
+
+
+            // income
+            var incomeSummary = selectedTransactions
+                .Where(t => t.Category.Type == "Income")
+                .GroupBy(t => t.Date)
+                .Select(s => new SplineChartData
+                {
+                    Day = s.First().Date.ToString("dd-MMM"),
+                    Income = s.Sum(i => i.Amount),
+
+
+                })
+                .ToList();
+
+            // expense
+            var expenseSummary = selectedTransactions
+                .Where(t => t.Category.Type == "Expense")
+                .GroupBy(t => t.Date)
+                .Select(s => new SplineChartData
+                {
+                    Day = s.First().Date.ToString("dd-MMM"),
+                    Expense = s.Sum(i => i.Amount),
+
+
+                })
+                .ToList();
+
+            // Combine Income & Expense
+            //skipping day without transactions
+            var past7Days = Enumerable.Range(0, 7)
+                .Select(i => startDate.AddDays(i).ToString("dd-MMM"))
+                .ToArray();
+
+            ViewBag.SplineChartData =
+                from day in past7Days
+                join income in incomeSummary on day equals income.Day into dayIncomeJoined
+                from income in dayIncomeJoined.DefaultIfEmpty()
+                join expense in expenseSummary on day equals expense.Day into dayExpenseJoined
+                from expense in dayExpenseJoined.DefaultIfEmpty()
+                select new
+                {
+                    Day = day,
+                    Income = income?.Income ?? 0,
+                    Expense = expense?.Expense ?? 0,
+
+                };
+
+
+
+            // recent transactions
+
+            ViewBag.RecentTransactions = await context.Transactions
+                .Include(t => t.Category)
+                .OrderByDescending(d => d.Date)
+                .Take(5)
+                .ToListAsync();
+
 
             return View();
         }
+    }
+
+    public class SplineChartData
+    {
+        public string Day;
+        public int Income;
+        public int Expense;
     }
 }

@@ -62,7 +62,7 @@
                 <e-accumulationchart-legendsettings position="Top" toggleVisibility="false">
                     <e-legendsettings-textstyle color="#fff" size="1rem"></e-legendsettings-textstyle>
                 </e-accumulationchart-legendsettings>
-                <e-accumulationchart-tooltipsettings enable></e-accumulationchart-tooltipsettings>
+                <e-accumulationchart-tooltipsettings enable />
             </ejs-accumulationchart>
         </div>
     </div>
@@ -71,7 +71,58 @@
             <div class="p-4">
                 <h5 class="fw-bold">Income vs Expense</h5>
             </div>
-            <ejs-chart id="spline-chart"></ejs-chart>
+            <ejs-chart id="spline-chart" background="#1a222b" palettes=@(new string[] {"#54ffa9", "#ffe91a"})>
+                <e-chart-primaryxaxis valueType="Category">
+                    <e-majorgridlines width="0" />
+                    <e-majorticklines width="0" />
+                </e-chart-primaryxaxis>
+
+                <e-chart-primaryyaxis rangePadding="Additional">
+                    <e-majorgridlines width="1" color="#32414d" dashArray="3,5" width="0" />
+                    <e-majorticklines width="0" />
+                    <e-linestyle width="0" />
+                </e-chart-primaryyaxis>
+                
+                <e-chart-chartarea>
+                    <e-chartarea-border width="0" />
+                </e-chart-chartarea>
+
+                <e-series-collection>
+                    <e-series dataSource="@ViewBag.SplineChartData" xName="Day" yName="Income" name="Income" width="3"
+                              type="@Syncfusion.EJ2.Charts.ChartSeriesType.Spline"/>
+                    <e-series dataSource="@ViewBag.SplineChartData" xName="Day" yName="Expense" name="Expense" width="3"
+                              type="@Syncfusion.EJ2.Charts.ChartSeriesType.Spline"/>
+                </e-series-collection>
+                <e-chart-legendsettings position="Top" alignment="Far" toggleVisibility="false">
+                    <e-legendsettings-textstyle color="#fff" size="1rem"></e-legendsettings-textstyle>
+                </e-chart-legendsettings>
+                <e-chart-tooltipsettings enable shared />
+            </ejs-chart>
+        </div>
+    </div>
+</div>
+
+@*recent transactions*@
+<div class="row">
+    <div class="col-md-6">
+        <div class="widget">
+            <div class="p-4">
+                <h5 class="fw-bold">Recent Transactions</h5>
+            </div>
+            <div class="px-4 pb-4">
+                <ejs-grid id="recent-transactions" dataSource="@ViewBag.RecentTransactions" gridLines="None">
+                    <e-grid-columns>
+                        <e-grid-column headerText="Category" field="CategoryIconAndTitle" />
+                        <e-grid-column headerText="Date" format="MMM-dd-yy"  type="date" field="Date" width="160px" />
+                        <e-grid-column headerText="Amount" field="FormattedAmount" textAlign="Right" width="120px" />
+                    </e-grid-columns>
+                </ejs-grid>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="widget h-100 d-flex justify-content-center align-items-center">
+            <span><i class="fa-solid fa-plus fa-2xl"></i>Widget</span>
         </div>
     </div>
 </div>
