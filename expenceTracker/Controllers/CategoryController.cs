@@ -90,6 +90,5 @@ namespace ExpenceTracker.Controllers
             await context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
     }
 }
